@@ -152,7 +152,7 @@ async def execute_final_steps(saga: SagaState, success: bool):
     context = "confirmation" if success else "cancellation"
     
     # Lógica simplificada, en un caso real los endpoints podrían variar
-    await call_final_service("notification", f"/send_{context}", saga)
+    await call_final_service("notification", f"/send_confirmation", saga)
     await call_final_service("tracking", f"/update_status", saga) # Este servicio leería el estado de la saga
     await call_final_service("customer", f"/update_history", saga)
 

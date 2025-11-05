@@ -21,7 +21,9 @@ async def send_confirmation(request: Request):
     """Envía una notificación de confirmación de pedido."""
     saga_data = await request.json()
     order_id = saga_data.get("orderId")
-    user = saga_data.get("user")
+    request_data = saga_data.get("request_data", {})
+    
+    user = request_data.get("user")
 
     if not all([order_id, user]):
         raise HTTPException(status_code=400, detail="Faltan campos requeridos: orderId y user")
@@ -46,7 +48,9 @@ async def send_cancellation(request: Request):
     """Envía una notificación de cancelación (compensación)."""
     saga_data = await request.json()
     order_id = saga_data.get("orderId")
-    user = saga_data.get("user")
+    request_data = saga_data.get("request_data", {})
+    
+    user = request_data.get("user")
 
     if not all([order_id, user]):
         raise HTTPException(status_code=400, detail="Faltan campos requeridos: orderId y user")
